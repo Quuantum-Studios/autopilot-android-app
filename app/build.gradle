@@ -1,11 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 33
-    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "tech.bogomolov.incomingsmsgateway"
+        compileSdk 33
         minSdkVersion 14
         targetSdkVersion 33
         versionCode 11
@@ -23,6 +22,7 @@ android {
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    namespace 'tech.bogomolov.incomingsmsgateway'
 
 }
 
