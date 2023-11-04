@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.quuantum.autopilot">
 
     <uses-feature
         android:name="android.hardware.telephony"
@@ -20,12 +21,12 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <service
-            android:name=".SmsReceiverService"
+            android:name="com.quuantum.autopilot.SmsReceiverService"
             android:enabled="true"
             android:exported="true" />
 
         <receiver
-            android:name=".BootCompletedReceiver"
+            android:name="com.quuantum.autopilot.BootCompletedReceiver"
             android:enabled="true"
             android:exported="true">
             <intent-filter>
@@ -34,7 +35,7 @@
         </receiver>
 
         <activity
-            android:name=".MainActivity"
+            android:name="com.quuantum.autopilot.MainActivity"
             android:exported="true"
             android:label="@string/app_name">
             <intent-filter>

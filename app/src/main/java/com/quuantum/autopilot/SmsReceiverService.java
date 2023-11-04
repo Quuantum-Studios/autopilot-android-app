@@ -1,4 +1,4 @@
-package tech.bogomolov.incomingsmsgateway;
+package com.quuantum.autopilot;
 
 import android.app.Notification;
 import android.app.NotificationChannel;

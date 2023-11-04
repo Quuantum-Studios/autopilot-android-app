@@ -1,4 +1,4 @@
-package tech.bogomolov.incomingsmsgateway;
+package com.quuantum.autopilot;
 
 import android.app.AlertDialog;
 import android.content.Context;

@@ -1,4 +1,4 @@
-package tech.bogomolov.incomingsmsgateway;
+package com.quuantum.autopilot;
 
 import android.Manifest;
 import android.app.ActivityManager;
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean isServiceRunning() {
         ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)){
-            if(tech.bogomolov.incomingsmsgateway.SmsReceiverService.class.getName().equals(service.service.getClassName())) {
+            if(com.quuantum.autopilot.SmsReceiverService.class.getName().equals(service.service.getClassName())) {
                 return true;
             }
         }

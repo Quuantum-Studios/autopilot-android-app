@@ -1,9 +1,7 @@
-package tech.bogomolov.incomingsmsgateway;
+package com.quuantum.autopilot;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.net.SSLCertificateSocketFactory;
-import android.os.Build;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -27,7 +25,7 @@ import java.util.Iterator;
 
 import javax.net.ssl.HttpsURLConnection;
 
-import tech.bogomolov.incomingsmsgateway.SSLSocketFactory.TLSSocketFactory;
+import com.quuantum.autopilot.SSLSocketFactory.TLSSocketFactory;
 
 public class WebHookWorkRequest extends Worker {
 

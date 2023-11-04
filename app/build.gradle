@@ -3,7 +3,7 @@ apply plugin: 'com.android.application'
 android {
 
     defaultConfig {
-        applicationId "tech.bogomolov.incomingsmsgateway"
+        applicationId "com.quuantum.autopilot"
         compileSdk 33
         minSdkVersion 14
         targetSdkVersion 33
@@ -22,7 +22,7 @@ android {
     compileOptions {
         targetCompatibility JavaVersion.VERSION_1_8
     }
-    namespace 'tech.bogomolov.incomingsmsgateway'
+    namespace 'com.quuantum.autopilot'
 
 }
 

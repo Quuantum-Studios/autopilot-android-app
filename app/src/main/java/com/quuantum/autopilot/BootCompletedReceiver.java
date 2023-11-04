@@ -1,4 +1,4 @@
-package tech.bogomolov.incomingsmsgateway;
+package com.quuantum.autopilot;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
