@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
@@ -26,6 +27,10 @@ import org.json.JSONObject;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import android.content.Intent;
+import android.net.Uri;
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -44,6 +49,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
             showList();
         }
+
+        checkIntent();
     }
 
     @Override
@@ -63,6 +70,28 @@ public class MainActivity extends AppCompatActivity {
             }
 
             return;
+        }
+    }
+
+    private void checkIntent(){
+        Intent intent = getIntent();
+        if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
+            Uri uri = intent.getData();
+            if (uri != null && "qaupiwc".equals(uri.getScheme())) {
+                String url = uri.getQueryParameter("url");
+                String headers = uri.getQueryParameter("headers");
+                String body = uri.getQueryParameter("body");
+
+                if (url != null) {
+                    Log.d("MainActivity", "URL: " + url);
+                }
+                if (headers != null) {
+                    Log.d("MainActivity", "Headers: " + headers);
+                }
+                if (body != null) {
+                    Log.d("MainActivity", "Body: " + body);
+                }
+            }
         }
     }
 
