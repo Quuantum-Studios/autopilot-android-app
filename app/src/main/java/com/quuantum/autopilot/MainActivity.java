@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.DataSetObserver;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -30,6 +32,8 @@ import java.util.ArrayList;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,6 +52,9 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECEIVE_SMS}, PERMISSION_CODE);
         } else {
             showList();
+            if (!this.isServiceRunning()) {
+                this.startService();
+            }
         }
 
         checkIntent();
@@ -65,6 +72,9 @@ public class MainActivity extends AppCompatActivity {
 
             if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
                 showList();
+                if (!this.isServiceRunning()) {
+                    this.startService();
+                }
             } else {
                 showInfo(getResources().getString(R.string.permission_needed));
             }
@@ -77,19 +87,23 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = getIntent();
         if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri uri = intent.getData();
-            if (uri != null && "qaupiwc".equals(uri.getScheme())) {
+            if (uri != null && "qaupiwc".equals(uri.getScheme()) && "import".equals(uri.getHost())) {
+                String sender = uri.getQueryParameter("sender");
                 String url = uri.getQueryParameter("url");
                 String headers = uri.getQueryParameter("headers");
                 String body = uri.getQueryParameter("body");
 
-                if (url != null) {
-                    Log.d("MainActivity", "URL: " + url);
-                }
-                if (headers != null) {
-                    Log.d("MainActivity", "Headers: " + headers);
-                }
-                if (body != null) {
-                    Log.d("MainActivity", "Body: " + body);
+                JSONObject data = new JSONObject();
+                try {
+                    data.put("sender",sender);
+                    data.put("url",url);
+                    data.put("headers",headers);
+                    data.put("body",body);
+
+                    showAddDialog(data);
+                } catch (JSONException e) {
+//                    throw new RuntimeException(e);
+                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         }
@@ -104,14 +118,23 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<ForwardingConfig> configs = ForwardingConfig.getAll(context);
 
         listAdapter = new ListAdapter(configs, context);
+        listAdapter.registerDataSetObserver(new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                if(listAdapter.getCount() ==0){
+                    showInfo("No configs found yet.\n Scan the QR code provided in plugin settings or add the config manually by clicking '+' in right corner.");
+                }
+                else{
+                    showInfo("");
+                }
+                super.onChanged();
+            }
+        });
+
         listview.setAdapter(listAdapter);
 
         FloatingActionButton fab = findViewById(R.id.btn_add);
-        fab.setOnClickListener(this.showAddDialog());
-
-        if (!this.isServiceRunning()) {
-            this.startService();
-        }
+        fab.setOnClickListener(v-> showAddDialog(null));
     }
 
     private boolean isServiceRunning() {
@@ -140,8 +163,7 @@ public class MainActivity extends AppCompatActivity {
         notice.setText(text);
     }
 
-    private View.OnClickListener showAddDialog() {
-        return v -> {
+    private void showAddDialog(@Nullable JSONObject data) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View view = getLayoutInflater().inflate(R.layout.dialog_add, null);
             final EditText senderInput = view.findViewById(R.id.input_phone);
@@ -152,7 +174,31 @@ public class MainActivity extends AppCompatActivity {
 
             templateInput.setText(ForwardingConfig.getDefaultJsonTemplate());
             headersInput.setText(ForwardingConfig.getDefaultJsonHeaders());
+            try {
+                if (data != null) {
+                    ignoreSslCheckbox.setChecked(true);
 
+                    String sender = data.getString("sender");
+                    if (!"".equals(sender)) {
+                        senderInput.setText(sender);
+                    }
+
+                    String url = data.getString("url");
+                    if (!"".equals(url)) {
+                        urlInput.setText(url);
+                    }
+                    String headers = data.getString("headers");
+                    if (!"".equals(headers)) {
+                        headersInput.setText(headers);
+                    }
+                    String body = data.getString("body");
+                    if (!"".equals(body)) {
+                        templateInput.setText(body);
+                    }
+                }
+            }catch (JSONException e){
+                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
+            }
             builder.setView(view);
             builder.setPositiveButton(R.string.btn_add, null);
             builder.setNegativeButton(R.string.btn_cancel, null);
@@ -208,7 +254,6 @@ public class MainActivity extends AppCompatActivity {
 
                 dialog.dismiss();
             });
-        };
     }
 
     public void showEditDialog(ForwardingConfig config) {

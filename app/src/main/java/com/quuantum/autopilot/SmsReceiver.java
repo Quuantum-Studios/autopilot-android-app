@@ -17,6 +17,8 @@ import androidx.work.WorkRequest;
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.json.JSONObject;
 
@@ -52,7 +54,13 @@ public class SmsReceiver extends BroadcastReceiver {
 
         ForwardingConfig matchedConfig = null;
         for (ForwardingConfig config : configs) {
-            if (sender.equals(config.getSender()) || config.getSender().equals(asterisk)) {
+            Pattern pattern = Pattern.compile(config.getSender());
+            if(sender==null){
+                continue;
+            }
+            Matcher matcher = pattern.matcher(sender);
+
+            if (sender.equals(config.getSender()) || config.getSender().equals(asterisk) || matcher.matches()) {
                 matchedConfig = config;
                 break;
             }

@@ -86,11 +86,12 @@ public class ForwardingConfig {
     }
 
     public static String getDefaultJsonTemplate() {
-        return "{\n  \"from\":\"%from%\",\n  \"text\":\"%text%\",\n  \"sentStamp\":%sentStamp%,\n  \"receivedStamp\":%receivedStamp%,\n  \"sim\":\"%sim%\"\n}";
+//        return "{\n  \"from\":\"%from%\",\n  \"text\":\"%text%\",\n  \"sentStamp\":%sentStamp%,\n  \"receivedStamp\":%receivedStamp%,\n  \"sim\":\"%sim%\"\n}";
+        return "{\n  \"string_data\":\"%text%\" \n}";
     }
 
     public static String getDefaultJsonHeaders() {
-        return "{\"User-agent\":\"SMS Forwarder App\"}";
+        return "{\"Authorization\":\"Basic xxxxxxxxxxxxxxxxxxxxx\"}";
     }
 
     public static ArrayList<ForwardingConfig> getAll(Context context) {
