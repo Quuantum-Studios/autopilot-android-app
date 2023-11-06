@@ -88,23 +88,7 @@ public class MainActivity extends AppCompatActivity {
         if (intent != null && Intent.ACTION_VIEW.equals(intent.getAction())) {
             Uri uri = intent.getData();
             if (uri != null && "qaupiwc".equals(uri.getScheme()) && "import".equals(uri.getHost())) {
-                String sender = uri.getQueryParameter("sender");
-                String url = uri.getQueryParameter("url");
-                String headers = uri.getQueryParameter("headers");
-                String body = uri.getQueryParameter("body");
-
-                JSONObject data = new JSONObject();
-                try {
-                    data.put("sender",sender);
-                    data.put("url",url);
-                    data.put("headers",headers);
-                    data.put("body",body);
-
-                    showAddDialog(data);
-                } catch (JSONException e) {
-//                    throw new RuntimeException(e);
-                    Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-                }
+                showAddDialog(uri);
             }
         }
     }
@@ -122,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged() {
                 if(listAdapter.getCount() ==0){
-                    showInfo("No configs found yet.\n Scan the QR code provided in plugin settings or add the config manually by clicking '+' in right corner.");
+                    showInfo("No configs found yet.\n\n You can add the configs by:\n 1. Scanning the QR code in plugin settings\n 2. Manually by clicking '+' in right corner below");
                 }
                 else{
                     showInfo("");
@@ -163,7 +147,7 @@ public class MainActivity extends AppCompatActivity {
         notice.setText(text);
     }
 
-    private void showAddDialog(@Nullable JSONObject data) {
+    private void showAddDialog(@Nullable Uri uri) {
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
             View view = getLayoutInflater().inflate(R.layout.dialog_add, null);
             final EditText senderInput = view.findViewById(R.id.input_phone);
@@ -174,31 +158,29 @@ public class MainActivity extends AppCompatActivity {
 
             templateInput.setText(ForwardingConfig.getDefaultJsonTemplate());
             headersInput.setText(ForwardingConfig.getDefaultJsonHeaders());
-            try {
-                if (data != null) {
+
+                if (uri != null) {
                     ignoreSslCheckbox.setChecked(true);
 
-                    String sender = data.getString("sender");
-                    if (!"".equals(sender)) {
+                    String sender = uri.getQueryParameter("sender");
+                    String url = uri.getQueryParameter("url");
+                    String headers = uri.getQueryParameter("headers");
+                    String body = uri.getQueryParameter("body");
+
+                    if (sender!=null) {
                         senderInput.setText(sender);
                     }
-
-                    String url = data.getString("url");
-                    if (!"".equals(url)) {
+                    if (url!=null) {
                         urlInput.setText(url);
                     }
-                    String headers = data.getString("headers");
-                    if (!"".equals(headers)) {
+                    if (headers!=null) {
                         headersInput.setText(headers);
                     }
-                    String body = data.getString("body");
-                    if (!"".equals(body)) {
+                    if (body!=null) {
                         templateInput.setText(body);
                     }
                 }
-            }catch (JSONException e){
-                Toast.makeText(context, e.getMessage(), Toast.LENGTH_LONG).show();
-            }
+
             builder.setView(view);
             builder.setPositiveButton(R.string.btn_add, null);
             builder.setNegativeButton(R.string.btn_cancel, null);
