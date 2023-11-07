@@ -1,6 +1,6 @@
-# Incoming SMS to URL forwarder
+# Autopilot Android App
 
-Try my new Android App - [Easy Expense Tracker](https://play.google.com/store/apps/details?id=tech.bogomolov.budget)
+[Download on playstore](https://play.google.com/store/apps/details?id=com.quuantum.autopilot)
 
 ## How to use
 
@@ -55,7 +55,7 @@ curl -X 'POST' 'https://yourwebsite.com/path' \
    3. Use this payload as a sample `{"text":"sms from %from% with text: \"%text%\" sent at %sentStamp%"}`
    4. Save configuration
 
-<img alt="Incoming SMS Webhook Gateway screenshot Telegram example" src="https://raw.githubusercontent.com/bogkonstantin/android_income_sms_gateway_webhook/master/fastlane/metadata/android/en-US/images/phoneScreenshots/telegram.png" width="30%"/> 
+<img alt="Autopilot screenshot Telegram example" src="https://raw.githubusercontent.com/bogkonstantin/android_income_sms_gateway_webhook/master/fastlane/metadata/android/en-US/images/phoneScreenshots/telegram.png" width="30%"/> 
 
 ### Process Payload in PHP scripts
 
@@ -66,14 +66,10 @@ $decoded = json_decode($payload, true);
 ```
 
 ## Screenshots
-<img alt="Incoming SMS Webhook Gateway screenshot 1" src="https://raw.githubusercontent.com/bogkonstantin/android_income_sms_gateway_webhook/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="30%"/> <img alt="Incoming SMS Webhook Gateway screenshot 2" src="https://raw.githubusercontent.com/bogkonstantin/android_income_sms_gateway_webhook/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="30%"/> <img alt="Incoming SMS Webhook Gateway screenshot 3" src="https://raw.githubusercontent.com/bogkonstantin/android_income_sms_gateway_webhook/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="30%"/>
+<img alt="Autopilot screenshot 1" src="https://raw.githubusercontent.com/bogkonstantin/android_income_sms_gateway_webhook/master/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width="30%"/> <img alt="Autopilot screenshot 2" src="https://raw.githubusercontent.com/bogkonstantin/android_income_sms_gateway_webhook/master/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width="30%"/> <img alt="Autopilot screenshot 3" src="https://raw.githubusercontent.com/bogkonstantin/android_income_sms_gateway_webhook/master/fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width="30%"/>
 
-## Download apk
+## Download
 
-Download apk from [release page](https://github.com/bogkonstantin/android_income_sms_gateway_webhook/releases)
-
-Or download it from F-Droid
-
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-     alt="Get it on F-Droid"
-     height="80">](https://f-droid.org/packages/tech.bogomolov.incomingsmsgateway/)
+[<img src="https://user-images.githubusercontent.com/58111243/226064822-65a6cf71-32fe-4298-b4ca-6f624f82dddf.png"
+     alt="Get it on Playstore"
+     height="80">](https://play.google.com/store/apps/details?id=com.quuantum.autopilot)
