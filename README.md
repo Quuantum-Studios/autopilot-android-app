@@ -70,6 +70,6 @@ $decoded = json_decode($payload, true);
 
 ## Download
 
-[<img src="https://user-images.githubusercontent.com/58111243/226064822-65a6cf71-32fe-4298-b4ca-6f624f82dddf.png"
+[<img src="https://cloud.githubusercontent.com/assets/5692567/10923351/6b688a92-8278-11e5-9973-8ffbf3c5cc52.png"
      alt="Get it on Playstore"
      height="80">](https://play.google.com/store/apps/details?id=com.quuantum.autopilot)
